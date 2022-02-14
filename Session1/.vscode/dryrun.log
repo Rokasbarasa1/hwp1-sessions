@@ -1,7 +1,0 @@
-make.exe --dry-run --keep-going --print-directory
-make: Entering directory 'c:/Users/Rokas/Desktop/SEMESTERS/7Semester/HWP1/Session1'
-avr-objcopy.exe -j .text -j .data -O ihex main.elf main.hex
-avrdude -C"C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf" -patmega2560 -cwiring -P\\.\COM3 -b115200 -D -U flash:w:C:\Users\Rokas\Desktop\SEMESTERS\7Semester\HWP1\Session1\main.hex:i
- 
-make: Leaving directory 'c:/Users/Rokas/Desktop/SEMESTERS/7Semester/HWP1/Session1'
- 

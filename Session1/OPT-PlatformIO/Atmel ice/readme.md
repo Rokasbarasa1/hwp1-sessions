@@ -1,4 +1,4 @@
-Atmel studio compiling method
+PlatformIO compiling method
 
 This uses a platformIO to perform compilation and flashing of the atmega2560.
 

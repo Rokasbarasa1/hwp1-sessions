@@ -1,0 +1,10 @@
+PORTC |= _BV(PORTC0) | _BV(PORTC1);
+DDRC &= ~(_BV(DDC0) | _BV(DDC1));
+
+uint8_t statusC0 = PINC & _BV(PINC0)
+
+if(statusC0 == 1){
+    DDRA = 0b00000001
+}else{
+
+}

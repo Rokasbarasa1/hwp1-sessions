@@ -1,7 +1,7 @@
 #Main application file name
 MAIN_APP = main
 #Main hex file path in windows format
-MAIN_HEX_PATH = C:\Users\Rokas\Desktop\hwp1-sessions\Session1\$(MAIN_APP).hex
+MAIN_HEX_PATH = C:\Users\Rokas\Desktop\SEMESTERS\7Semester\HWP1\Session1\OPT-Makefile\$(MAIN_APP).hex
 
 # Compiler and other Section
 CC = avr-gcc
@@ -21,8 +21,16 @@ HFLAGS = -j .text -j .data -O ihex
 #MMCU model here according to avrdude options
 DUDEFLAGS = -C"C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf"
 DUDEFLAGS += -p atmega2560
-DUDEFLAGS += -c wiring
-DUDEFLAGS += -P \\.\COM3
+
+# Flags for atmel ice
+DUDEFLAGS += -c atmelice
+DUDEFLAGS += -e
+DUDEFLAGS += -P usb
+
+# Flags for normal usb without atmel ice
+# DUDEFLAGS += -c wiring
+# DUDEFLAGS += -P \\.\COM3
+
 DUDEFLAGS += -b 115200
 DUDEFLAGS += -D
 DUDEFLAGS += -U flash:w:$(MAIN_HEX_PATH):i

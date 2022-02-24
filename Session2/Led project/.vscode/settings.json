@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "led_driver.h": "c",
+        "led_driver.hpp": "c",
+        "calculator.hpp": "c",
+        "led_array.h": "c",
+        "key_array.h": "c",
+        "delay.h": "c",
+        "io.h": "c",
+        "iom2560.h": "c",
+        "sfr_defs.h": "c"
+    }
+}

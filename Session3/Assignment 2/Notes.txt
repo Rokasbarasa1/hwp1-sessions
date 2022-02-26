@@ -1,0 +1,3 @@
+If libraries are in src you need to force compile of src folder.
+
+If a folder named atmelavr exists in directory the atmelavr framework will not work.

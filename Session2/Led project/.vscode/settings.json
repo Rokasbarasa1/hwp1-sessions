@@ -8,6 +8,9 @@
         "delay.h": "c",
         "io.h": "c",
         "iom2560.h": "c",
-        "sfr_defs.h": "c"
+        "sfr_defs.h": "c",
+        "gtest.h": "c",
+        "common.h": "c",
+        "fake_avr_sfr.c": "cpp"
     }
 }

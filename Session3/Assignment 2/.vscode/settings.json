@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "forced_include.h": "c",
+        "fake_avr_sfr.c": "cpp",
+        "led_array.h": "c"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "interrupt_keys.h": "c",
+        "key_array.h": "c",
+        "led_array.h": "c",
+        "interrupt.h": "c",
+        "io.h": "c",
+        "timer.h": "c",
+        "callback.h": "c"
+    }
+}

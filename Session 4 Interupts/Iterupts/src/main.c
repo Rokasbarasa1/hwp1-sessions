@@ -38,6 +38,8 @@
 //     }
 // }
 
+//INTERUPT TIMER
+
 int main(void){
 	// Initialize state
     
@@ -51,7 +53,6 @@ int main(void){
     // CALLBACK INTERRUPT
     // init_callback(call_back1, call_back2);
 	// sei();
-
 	
 	while(1){}
 	return 0;

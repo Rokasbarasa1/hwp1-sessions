@@ -18,7 +18,17 @@ void set_led(uint8_t led_no, uint8_t state){
         }
     }
 }
-
+ 
 uint8_t read_led(uint8_t led_no){	
     return (PINA & _BV(led_no));
+}
+
+void set_bar(uint8_t glowing_led_no){
+    if(glowing_led_no < 9){
+        uint8_t leds_status = 0b00000000;
+        for(uint8_t i = 0; i < glowing_led_no; i++){
+            leds_status |= (1<<i);
+        }
+        PORTA = leds_status;
+    }
 }

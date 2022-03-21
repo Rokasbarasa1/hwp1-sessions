@@ -1,9 +1,5 @@
 {
     "files.associations": {
-        "forced_include.h": "c",
-        "fake_avr_sfr.c": "cpp",
-        "led_array.h": "c",
-        "io.h": "c",
-        "key_array.h": "c"
+        "arduino.h": "c"
     }
 }

@@ -7,7 +7,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include "../lib/temperature_driver/temperature_sensor.h"
+#include "../lib/temperature_application/temperature_application.h"
 
 // Meassure temperature once per second. 
 // Sensor must use interrupts.
@@ -17,11 +17,9 @@
 
 int main(void){
 	// Initialize state
-	// Serial.begin(115200);
-	init_temperature_sensor();
-	sei();
-	//Event loop
+	init_temperature_application();
 	
+	//Event loop
 	while (1){
 		_delay_ms(200);
 		// Turn on LED

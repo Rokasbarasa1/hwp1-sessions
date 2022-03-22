@@ -8,3 +8,7 @@ void hal_create(uint8_t portNo){
 int16_t hal_getVoltage(uint8_t channel){
     return 8;
 }
+
+void create(){
+    PORTA = 0b11111111;
+}

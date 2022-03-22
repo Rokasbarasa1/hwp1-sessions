@@ -3,6 +3,9 @@
 #include "../../extras/forced_include.h"
 
 #include <gtest/gtest.h>
+#include "../../extras/fff.h"
+
+DEFINE_FFF_GLOBALS;
 
 //Calls every test file
 int main(int argc, char **argv){

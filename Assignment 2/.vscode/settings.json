@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "arduino.h": "c"
+        "arduino.h": "c",
+        "interrupt.h": "c",
+        "temperature_application.h": "c",
+        "led_array.h": "c",
+        "dependency_driver.h": "c"
     }
 }

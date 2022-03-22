@@ -27,7 +27,6 @@ void init_callback(void (*call_back_down)(), void (*call_back_up)()){
     }
 }
 
-
 ISR(INT2_vect){
 	if(cb1 != 0){
         cb1();

@@ -18,6 +18,7 @@
 int main(void){
 	// Initialize state
 	init_temperature_application();
+    sei();
 	
 	//Event loop
 	while (1){

@@ -51,28 +51,55 @@ void print_segments(){
         
         for(uint8_t j = 0; j<8; j++){
             //Get least significant bit
-            uint8_t bitStatus = (digit_one >> (j+1)) & 1;
+            uint8_t bitStatus = (digits[i] >> (j)) & 1;
 
-            PORTB |= _BV(PB2);
-            // if(bitStatus){
-            //     PORTB |= _BV(PB2);
-            // }else{
-            //     PORTB &= ~(_BV(PB2));
-            // }
+            if(bitStatus){
+                PORTB |= _BV(PB2);
+            }else{
+                PORTB &= ~(_BV(PB2));
+            }
 
             // Put the bit in the shift register
             PORTB |= _BV(PB1);
             PORTB &= ~(_BV(PB1));
         }
 
-        // Put the data from the loop into 
+        // Put the data from the loop into the sequence register
         PORTB |= _BV(PB0);
         PORTB &= ~(_BV(PB0));
 
-        if(i != 0){
-            PORTF &= ~(_BV(PF0+i-1));
-        }
-        PORTF &= ~(_BV(PF0 + i));
+
+        PORTF &= ~(_BV(i));
+        _delay_ms(2);
+        PORTF |= _BV(i);
+        
+        // if(i != 0){
+        //     PORTF |= _BV(i-1);
+        // }
+        // if(i == 0){
+        //     PORTF &= ~(_BV(PF0 + i));
+        // }else{
+        //     PORTF &= ~(_BV(PF0+i-1));
+        //     PORTF &= ~(_BV(PF0+i-1));
+
+        // }
+
     }
+
+    // for(uint8_t j = 0; j<8; j++){
+
+    //     PORTB |= _BV(PB2);
+
+    //     PORTB |= _BV(PB1);
+    //     PORTB &= ~(_BV(PB1));
+    // }
+
+    // // Put the bit in the shift register
+    // PORTB |= _BV(PB1);
+    // PORTB &= ~(_BV(PB1));
+
+    // // Show empty
+    // PORTF |= _BV(4);
+
 
 }

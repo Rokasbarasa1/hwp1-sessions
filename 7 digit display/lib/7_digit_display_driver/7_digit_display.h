@@ -3,6 +3,7 @@
 
 	#ifndef UNIT_TEST
 		#include <avr/io.h>
+        #include <util/delay.h>
 
 	#else
 		#include "../../extras/forced_include.h"

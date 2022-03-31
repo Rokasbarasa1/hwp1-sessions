@@ -21,19 +21,21 @@ int main(void){
     sei();
 	
 	init_segments();
-	uint8_t digits[] = {ONE, TWO, THREE, FOUR};
+	uint8_t digits[] = {ONE, ZERO, ONE, NINE};
 	set_segments(digits);
 
 	//Event loop
 	while (1){
-		// // Turn on LED
+		// Turn on LED
 		// DDRB |= _BV(DDB7);
-		// print
+		// _delay_ms(5);
+		
 		// // Turn off LED
 		// DDRB &= ~(_BV(DDB7));
-		_delay_ms(20);
+        // _delay_ms(5);
+
 		print_segments();
-		_delay_ms(20);
+		_delay_ms(10);
 
   	}
 	return 0;

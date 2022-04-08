@@ -5,6 +5,8 @@ uint8_t digit_two = 0b11111111;
 uint8_t digit_three = 0b11111111;
 uint8_t digit_four = 0b11111111;
 
+uint8_t current_number = 0;
+
 uint8_t numbers_array[] = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE};
 
 void init_segments()
@@ -22,8 +24,8 @@ void init_segments()
 
     // Interupt value
     // OCR4A = 24999; // 5Hz
-    // OCR4A = 1249; // 100Hz
-    OCR4A = 4999; // 25Hz
+    OCR4A = 1249; // 100Hz
+    // OCR4A = 4999; // 25Hz
 
     // Mode CTC
     TCCR4B |= _BV(WGM42);
@@ -66,40 +68,56 @@ void print_segments()
 {
     const uint8_t digits[] = {digit_one, digit_two, digit_three, digit_four};
 
-    for (uint8_t i = 0; i < 4; i++)
+    for (uint8_t j = 0; j < 8; j++)
     {
+        // Get least significant bit
+        uint8_t bitStatus = (digits[current_number] >> (j)) & 1;
 
-        for (uint8_t j = 0; j < 8; j++)
+        if (bitStatus)
         {
-            // Get least significant bit
-            uint8_t bitStatus = (digits[i] >> (j)) & 1;
-
-            if (bitStatus)
-            {
-                PORTB |= _BV(PB2);
-            }
-            else
-            {
-                PORTB &= ~(_BV(PB2));
-            }
-
-            // Put the bit in the shift register
-            PORTB |= _BV(PB1);
-            PORTB &= ~(_BV(PB1));
+            PORTB |= _BV(PB2);
+        }
+        else
+        {
+            PORTB &= ~(_BV(PB2));
         }
 
-        // Put the data from the loop into the sequence register
-        PORTB |= _BV(PB0);
-        PORTB &= ~(_BV(PB0));
-
-        PORTF &= ~(_BV(i));
-        _delay_ms(2);
-        PORTF |= _BV(i);
+        // Put the bit in the shift register
+        PORTB |= _BV(PB1);
+        PORTB &= ~(_BV(PB1));
     }
+
+    // Put the data from the loop into the sequence register
+    PORTB |= _BV(PB0);
+    PORTB &= ~(_BV(PB0));
+
+    PORTF &= ~(_BV(current_number));
+    // _delay_ms(15);
+    // PORTF |= _BV(current_number);
 }
 
 // Handle refresh of display
 ISR(TIMER4_COMPA_vect)
 {
     print_segments();
+
+    if (current_number == 0)
+    {
+        PORTF |= _BV(3);
+    }
+    else
+    {
+        PORTF |= _BV(current_number - 1);
+    }
+
+    if (current_number != 3)
+    {
+        current_number++;
+    }
+    else
+    {
+        current_number = 0;
+    }
 }
+
+// Show one and put number into buffer.

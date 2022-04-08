@@ -10,7 +10,7 @@ void init_temperature_application()
     init_temperature_sensor();
 }
 
-void show_temperature()
+void obtain_temperature()
 {
     set_number((uint16_t)get_temperature());
 }

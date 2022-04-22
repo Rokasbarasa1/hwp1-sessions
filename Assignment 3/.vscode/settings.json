@@ -8,6 +8,8 @@
     "delay.h": "c",
     "forced_include.h": "c",
     "temperature_sensor.h": "c",
-    "7_digit_display.h": "c"
+    "7_digit_display.h": "c",
+    "segments_driver.h": "c",
+    "temperature_driver.h": "c"
   }
 }

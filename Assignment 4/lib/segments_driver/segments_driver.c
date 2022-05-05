@@ -9,7 +9,7 @@
  *
  */
 
-#include "segments_driver.hpp"
+#include "segments_driver.h"
 
 // Default number values
 uint8_t digit_one = 0b11111111;

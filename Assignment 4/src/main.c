@@ -19,16 +19,16 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-#include "../lib/matrix_driver/matrix_driver.hpp"
-#include "../lib/segments_driver/segments_driver.hpp"
-#include "../lib/solar_panel_application/solar_panel_application.hpp"
+#include "../lib/matrix_driver/matrix_driver.h"
+#include "../lib/segments_driver/segments_driver.h"
+#include "../lib/solar_panel_application/solar_panel_application.h"
 
-#include <Arduino.h>
+// #include <Arduino.h>
 
 int main(void)
 {
     // Initialize basic things
-    Serial.begin(115200);
+    // Serial.begin(115200);
     sei();
     
 

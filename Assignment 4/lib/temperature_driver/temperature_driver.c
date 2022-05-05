@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include "temperature_driver.hpp"
+#include "temperature_driver.h"
 
 uint16_t raw_sample = 0;
 

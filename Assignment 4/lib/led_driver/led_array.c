@@ -1,4 +1,4 @@
-#include "led_array.hpp"
+#include "led_array.h"
 
 void init_leds(){
     // Output high for all leds to turn them off.

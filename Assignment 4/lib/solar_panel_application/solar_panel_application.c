@@ -3,10 +3,12 @@
 #include "../matrix_driver/matrix_driver.h"
 #include "../temperature_driver/temperature_driver.h"
 #include "../led_driver/led_array.h"
+#include "../servo_driver/servo_driver.h"
+// #include "../key_driver/key_array.h"
 
-int16_t current_temperature = 515;
-int16_t low_temperature = 100;
-int16_t high_temperature = 444;
+int16_t current_temperature = 0;
+int16_t low_temperature = 24;
+int16_t high_temperature = 30;
 
 // Modes:
 // 0 - current temperature,
@@ -21,6 +23,7 @@ uint8_t mode = 0;
 // 1 - pump on
 uint8_t pumpMode = 0;
 
+// 20 is the default value. Because its out of reach
 int8_t userInput1 = 20;
 int8_t userInput2 = 20;
 int8_t userInput3 = 20;
@@ -38,6 +41,8 @@ void init_solar_panel_application()
     init_matrix_keyboard();
     init_temperature_sensor();
     init_leds();
+    // init_keys();
+    init_servo();
 
     set_bar(1);
 }
@@ -45,7 +50,7 @@ void init_solar_panel_application()
 void refresh()
 {
     char key = getKey();
-
+    
     if(key != 120){
         if(key == '1' && mode != 1 && mode != 2 && sameKeyCount == 30){
             // t low mode
@@ -61,6 +66,19 @@ void refresh()
             sameKeyCount = 0;
         }
 
+        // if(get_button(1) && mode != 1 && mode != 2 ){
+        //     // t low mode
+        //     mode = 1;
+        //     sameKeyCount = 0;
+        // }else if (get_button(2) && mode != 1 && mode != 2 ){
+        //     // t high mode
+        //     mode = 2;
+        //     sameKeyCount = 0;
+        // }else if (get_button(3) && mode != 1 && mode != 2 ){
+        //     // Current temperature mode
+        //     mode = 0;
+        //     sameKeyCount = 0;
+        // }
     }
 
     if(mode == 0){
@@ -85,6 +103,17 @@ void refresh()
     }else{
         sameKeyCount = 0;
         previousKey = key;
+    }
+
+    current_temperature = get_temperature();
+    if(current_temperature> high_temperature){
+        pumpMode = 1;
+        set_led(7, 1);
+        move_CW();
+    }else if(current_temperature < low_temperature && pumpMode == 1){
+        // pumpMode = 0;
+        set_led(7, 0);
+        move_CCW();
     }
 }
 

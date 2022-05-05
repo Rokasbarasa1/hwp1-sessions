@@ -33,25 +33,25 @@ const char characters[17] = {
 
 void init_matrix_keyboard(void) {
 
-	// configure rows as outputs
+	// Rows OUTPUT
 	DDRD |= _BV(PD7);
 	DDRG |= _BV(PG5);
 	DDRB |= _BV(PB6);
 	DDRH |= _BV(PH6);
 
-	// set rows to HIGH
+	// Output HIGH
 	PORTD |= _BV(PD7);
 	PORTG |= _BV(PG5);
 	PORTB |= _BV(PB6);
 	PORTH |= _BV(PH6);
 
-	// configure columns as inputs
+	// Columns INPUT
 	DDRE &= ~(_BV(PE4));
 	DDRL &= ~(_BV(PL0));
 	DDRH &= ~(_BV(PH4));
 	DDRL &= ~(_BV(PL2));
 
-	// enable pullup resistors
+	// Input with pull up resistor
 	PORTE |= _BV(PE4);
 	PORTL |= _BV(PL0);
 	PORTH |= _BV(PH4);

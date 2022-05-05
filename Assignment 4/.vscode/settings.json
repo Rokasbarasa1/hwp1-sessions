@@ -11,6 +11,7 @@
     "7_digit_display.h": "c",
     "segments_driver.h": "c",
     "temperature_driver.h": "c",
-    "matrix_driver.h": "c"
+    "matrix_driver.h": "c",
+    "servo_driver.h": "c"
 }
 }

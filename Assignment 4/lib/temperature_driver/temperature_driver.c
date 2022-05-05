@@ -3,7 +3,7 @@
  * @author Rokas and Arturas (285047@via.dk, 285051@via.dk)
  * @brief
  * @version 0.1
- * @date 2022-04-15
+ * @date 2022-05-05
  *
  * @copyright Copyright (c) 2022
  *
@@ -88,6 +88,7 @@ ISR(ADC_vect)
     TIFR0 |= _BV(OCF0A);
 }
 
+// Get converted temperature
 int16_t get_temperature()
 {
     return voltage_to_temperature_TMP36(convert_to_voltage(raw_sample));

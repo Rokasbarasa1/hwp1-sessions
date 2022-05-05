@@ -1,3 +1,14 @@
+/**
+ * @file led_array.c
+ * @author Rokas and Arturas (285047@via.dk, 285051@via.dk)
+ * @brief
+ * @version 0.1
+ * @date 2022-05-05
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include "led_array.h"
 
 void init_leds(){

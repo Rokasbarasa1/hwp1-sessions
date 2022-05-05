@@ -27,6 +27,5 @@
  * 
  */
 
-
 void init_solar_panel_application();
 void refresh();

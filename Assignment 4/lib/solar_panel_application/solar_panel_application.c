@@ -4,7 +4,7 @@
 #include "../temperature_driver/temperature_driver.h"
 #include "../led_driver/led_array.h"
 #include "../servo_driver/servo_driver.h"
-// #include "../key_driver/key_array.h"
+#include "../key_driver/key_array.h"
 
 int16_t current_temperature = 0;
 int16_t low_temperature = 24;
@@ -44,7 +44,7 @@ void init_solar_panel_application()
     // init_keys();
     init_servo();
 
-    set_bar(1);
+    // set_bar(1);
 }
 
 void refresh()
@@ -83,16 +83,39 @@ void refresh()
 
     if(mode == 0){
         handle_mode_one(key);
-        set_bar(1);
+        
+        set_led(1, 0);
+        set_led(2, 0);
+        set_led(3, 0);
+        set_led(4, 0);
+
+        set_led(0, 1);
     }else if(mode == 1 || mode == 2){
         handle_mode_two_three(key);
-        set_bar(3);
+
+        set_led(0, 0);
+        set_led(3, 0);
+        set_led(4, 0);
+
+        set_led(1, 1);
+        set_led(2, 1);
+        
     }else if(mode == 3){
         handle_mode_four(key);
-        set_bar(4);
+        set_led(0, 0);
+        set_led(1, 0);
+        set_led(2, 0);
+        set_led(4, 0);
+
+        set_led(3, 1);
     }else if(mode == 4){
         handle_mode_five(key);
-        set_bar(5);
+        set_led(0, 0);
+        set_led(1, 0);
+        set_led(2, 0);
+        set_led(3, 0);
+
+        set_led(4, 1);
     }
 
 
@@ -106,12 +129,12 @@ void refresh()
     }
 
     current_temperature = get_temperature();
-    if(current_temperature> high_temperature){
+    if(current_temperature >= high_temperature && !pumpMode){
         pumpMode = 1;
         set_led(7, 1);
         move_CW();
-    }else if(current_temperature < low_temperature && pumpMode == 1){
-        // pumpMode = 0;
+    }else if(current_temperature <= low_temperature && pumpMode){
+        pumpMode = 0;
         set_led(7, 0);
         move_CCW();
     }

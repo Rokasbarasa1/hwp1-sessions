@@ -30,7 +30,7 @@ void refresh_key_led_application(){
 
     //Gather all events
     for (uint8_t i = 0; i<6; i++){
-        if(get_key_status(i) == (1<<i)){
+        if(get_key_status(i)){
             switches[i] = 0;
         }else{
             switches[i] = 1;

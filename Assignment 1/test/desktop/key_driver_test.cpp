@@ -31,12 +31,12 @@ TEST_F(KEYDriverTest, get_key_not_pressed) {
 
     init_keys();
     
-    EXPECT_TRUE(get_key_status(0) != (1<<0));
-    EXPECT_TRUE(get_key_status(1) != (1<<1));
-    EXPECT_TRUE(get_key_status(2) != (1<<2));
-    EXPECT_TRUE(get_key_status(3) != (1<<3));
-    EXPECT_TRUE(get_key_status(4) != (1<<4));
-    EXPECT_TRUE(get_key_status(5) != (1<<5));
+    EXPECT_TRUE(!get_key_status(0));
+    EXPECT_TRUE(!get_key_status(1));
+    EXPECT_TRUE(!get_key_status(2));
+    EXPECT_TRUE(!get_key_status(3));
+    EXPECT_TRUE(!get_key_status(4));
+    EXPECT_TRUE(!get_key_status(5));
 }
 
 TEST_F(KEYDriverTest, get_key_pressed) {
@@ -45,10 +45,10 @@ TEST_F(KEYDriverTest, get_key_pressed) {
     //Set all 6 key pins to 1 
     PINC |= _BV(PORTC0) | _BV(PORTC1) | _BV(PORTC2) | _BV(PORTC3) | _BV(PORTC4) | _BV(PORTC5);
 
-    EXPECT_TRUE(get_key_status(0) == (1<<0));
-    EXPECT_TRUE(get_key_status(1) == (1<<1));
-    EXPECT_TRUE(get_key_status(2) == (1<<2));
-    EXPECT_TRUE(get_key_status(3) == (1<<3));
-    EXPECT_TRUE(get_key_status(4) == (1<<4));
-    EXPECT_TRUE(get_key_status(5) == (1<<5));
+    EXPECT_TRUE(get_key_status(0));
+    EXPECT_TRUE(get_key_status(1));
+    EXPECT_TRUE(get_key_status(2));
+    EXPECT_TRUE(get_key_status(3));
+    EXPECT_TRUE(get_key_status(4));
+    EXPECT_TRUE(get_key_status(5));
 }

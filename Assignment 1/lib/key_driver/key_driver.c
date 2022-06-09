@@ -10,6 +10,6 @@ void init_keys(){
 // Gets the number. If number is not pressed it returns 0 if it is pressed it returns more than zero 
 uint8_t get_key_status(uint8_t key_no){
     if(key_no >= 0 && key_no < 6){
-        return (PINC & _BV(key_no));
+        return (PINC & _BV(key_no)) >> key_no;
     }
 }

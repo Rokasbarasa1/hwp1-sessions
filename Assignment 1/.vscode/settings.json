@@ -4,6 +4,9 @@
         "fake_avr_sfr.c": "cpp",
         "led_array.h": "c",
         "io.h": "c",
-        "key_array.h": "c"
+        "key_array.h": "c",
+        "key_led_application.h": "c",
+        "delay.h": "c",
+        "key_driver.h": "c"
     }
 }

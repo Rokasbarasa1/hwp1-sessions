@@ -1,9 +1,9 @@
-#include "../../extras/forced_include.h"
+#include "../extras/forced_include.h"
 #include <gtest/gtest.h>
 
 extern "C"{
-    #include "../../extras/include/avr/io.h"
-    #include "../../lib/led_driver/led_driver.h"
+    #include "../extras/include/avr/io.h"
+    #include "../lib/led_driver/led_driver.h"
 }
 
 class LEDDriverTest : public ::testing::Test {

@@ -13,13 +13,13 @@
 #include "../segments_driver/segments_driver.h"
 #include "../matrix_driver/matrix_driver.h"
 #include "../temperature_driver/temperature_driver.h"
-#include "../led_driver/led_array.h"
+#include "../led_driver/led_driver.h"
 #include "../servo_driver/servo_driver.h"
-#include "../key_driver/key_array.h"
+#include "../key_driver/key_driver.h"
 
 int16_t current_temperature = 0;
 int16_t low_temperature = 22;
-int16_t high_temperature = 30;
+int16_t high_temperature = 27;
 
 // Modes:
 // 0 - current temperature,

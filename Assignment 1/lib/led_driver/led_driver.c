@@ -1,7 +1,7 @@
-#include "led_array.h"
+#include "led_driver.h"
 
 void init_leds(){
-    // Output high for all leds to turn them off.
+    // Output high for all led's to turn them off.
     DDRA = 0b11111111;
     PORTA = 0b11111111;
 }

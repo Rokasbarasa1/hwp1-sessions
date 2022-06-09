@@ -1,9 +1,9 @@
-#include "../../extras/forced_include.h"
+#include "../extras/forced_include.h"
 #include <gtest/gtest.h>
 
 extern "C"{
-    #include "../../extras/include/avr/io.h"
-    #include "../../lib/key_driver/key_driver.h"
+    #include "../extras/include/avr/io.h"
+    #include "../lib/key_driver/key_driver.h"
 }
 
 class KEYDriverTest : public ::testing::Test {

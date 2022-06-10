@@ -1,13 +1,3 @@
-/**
- * @file temperature_driver.c
- * @author Rokas and Arturas (285047@via.dk, 285051@via.dk)
- * @brief
- * @version 0.1
- * @date 2022-04-15
- *
- * @copyright Copyright (c) 2022
- *
- */
 #include "temperature_driver.h"
 
 uint16_t raw_sample = 0;
@@ -88,6 +78,7 @@ ISR(ADC_vect)
     TIFR0 |= _BV(OCF0A);
 }
 
+// Get converted temperature
 int16_t get_temperature()
 {
     return voltage_to_temperature_TMP36(convert_to_voltage(raw_sample));

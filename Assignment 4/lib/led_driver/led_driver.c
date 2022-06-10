@@ -1,18 +1,7 @@
-/**
- * @file led_array.c
- * @author Rokas and Arturas (285047@via.dk, 285051@via.dk)
- * @brief
- * @version 0.1
- * @date 2022-05-05
- *
- * @copyright Copyright (c) 2022
- *
- */
-
-#include "led_array.h"
+#include "led_driver.h"
 
 void init_leds(){
-    // Output high for all leds to turn them off.
+    // Output high for all led's to turn them off.
     DDRA = 0b11111111;
     PORTA = 0b11111111;
 }
@@ -29,7 +18,7 @@ void set_led(uint8_t led_no, uint8_t state){
         }
     }
 }
- 
+
 uint8_t read_led(uint8_t led_no){	
     return (PINA & _BV(led_no));
 }

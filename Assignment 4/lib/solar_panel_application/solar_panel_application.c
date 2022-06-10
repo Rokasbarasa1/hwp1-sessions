@@ -48,18 +48,16 @@ uint16_t previousKey = 0;
 // The button has to be pressed for at least 30 cycles of the same key to activate something in the logic.
 uint16_t sameKeyCount = 0;
 
-void init_solar_panel_application()
-{
+void init_solar_panel_application(){
     init_display();
     init_matrix_keyboard();
     init_temperature_sensor();
     init_leds();
-    // init_keys(); // The keys iterfeared somehow with the matrix so we made the keys in the matrix instead.
+    // init_keys(); // The keys interfered somehow with the matrix so we made the keys in the matrix instead.
     init_servo();
 }
 
-void refresh()
-{
+void refresh_solar_panel_application(){
     char key = getKey();
     
     // Read the key before any of the events to change the mode if needed
@@ -175,7 +173,6 @@ void handle_mode_one(char key){
     set_number_4u((uint16_t)get_temperature());
 }
 
-
 // This edits the high and low values based on user input
 void handle_mode_two_three(char key){
     // User enters number, the shown numbers are updated
@@ -282,7 +279,6 @@ void handle_mode_two_three(char key){
         set_number_4u(number_to_show);
     }
 }
-
 
 // Show the low temperature 
 void handle_mode_four(char key){

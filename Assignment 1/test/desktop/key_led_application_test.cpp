@@ -5,6 +5,8 @@
 extern "C"{
     #include "../../extras/include/avr/io.h"
     #include "../../lib/key_led_application/key_led_application.h"
+    #include "../../lib/key_driver/key_driver.h"
+    #include "../../lib/led_driver/led_driver.h"
 }
 
 FAKE_VOID_FUNC(init_leds);

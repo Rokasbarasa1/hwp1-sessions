@@ -21,17 +21,15 @@
 
 #include "../lib/temperature_display_applicaiton/temperature_application.h"
 
-int main(void)
-{
+int main(void){
     // Initialize state
     init_temperature_application();
     sei();
 
     // Event loop
-    while (1)
-    {
+    while (1){
+        refresh_temperature_application();
         _delay_ms(1000);
-        obtain_temperature();
     }
     return 0;
 }

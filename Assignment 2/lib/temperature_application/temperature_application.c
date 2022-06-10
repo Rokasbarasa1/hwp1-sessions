@@ -1,12 +1,18 @@
 #include "temperature_application.h"
-#include "../led_driver/led_array.h"
-#include "../temperature_driver/temperature_sensor.h"
 
-int16_t temperature = -40;
+// Measure temperature once per second. 
+// Sensor must use interrupts.
+// Convert temperature from sensor
+// Calculate as Celsius.
+// Show it on leds 1-8 as 18-25c 
+void init_temperature_application(){
+    //Initialize needed drivers
+    init_leds();
+    init_temperature_sensor();
+}
 
-//Callback to handle temperature driver
-void interrupt_callback(int16_t result){
-	temperature = result;
+void refresh_temperature_application(){
+    int16_t temperature = get_temperature();
 
     //Logic for led bar
     if(temperature < 17){
@@ -17,10 +23,4 @@ void interrupt_callback(int16_t result){
     } else if(temperature > 25){
         set_bar(8);
     }
-}
-
-void init_temperature_application(){
-    //Initialize needed drivers
-    init_leds();
-    init_temperature_sensor_callback(interrupt_callback);
 }

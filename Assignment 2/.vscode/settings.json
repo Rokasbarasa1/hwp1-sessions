@@ -4,6 +4,7 @@
         "interrupt.h": "c",
         "temperature_application.h": "c",
         "led_array.h": "c",
-        "dependency_driver.h": "c"
+        "dependency_driver.h": "c",
+        "delay.h": "c"
     }
 }

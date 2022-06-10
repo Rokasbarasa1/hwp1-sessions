@@ -28,4 +28,4 @@
  */
 
 void init_solar_panel_application();
-void refresh();
+void refresh_solar_panel_application();

@@ -3,7 +3,7 @@
 
 extern "C"{
     #include "../../extras/include/avr/io.h"
-    #include "../../lib/temperature_driver/temperature_sensor.h"
+    #include "../../lib/temperature_driver/temperature_driver.h"
 }
 
 class TEMPERATUREDriverTest : public ::testing::Test {
@@ -22,7 +22,7 @@ void callback(int16_t value){
 
 TEST_F(TEMPERATUREDriverTest, Init_keys) {
 
-    init_temperature_sensor_callback(callback);
+    init_temperature_sensor();
 
 	// Checking that every port has been set here would be crazy
 	// If you have more features it would be nice to test the registers to ensure they still work

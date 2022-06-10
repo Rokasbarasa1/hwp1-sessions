@@ -1,14 +1,8 @@
-#include "temperature_sensor.h"
-#include "../led_driver/led_array.h"
+#include "temperature_driver.h"
 
-// Hold callback
-static void (*cb)(int16_t) = 0;
+uint16_t raw_sample = 0;
 
-void init_temperature_sensor_callback(functiontype call_back){
-    // Save callback
-    if(call_back != 0){
-        cb = call_back;
-    }
+void init_temperature_sensor(){
     // PG0 is to enable the sensor
     PORTG |= _BV(PORTG0);
 
@@ -28,8 +22,7 @@ void init_temperature_sensor_callback(functiontype call_back){
     // Enable adc
     ADCSRA |= _BV(ADSC);
 
-
-    //Set it to interrupt every 1 seconds. Timer 1B
+    // Set it to interrupt every 1 seconds. Timer 1B
     ADCSRB |= _BV(ADTS1) | _BV(ADTS0);
     ADCSRB &= ~(_BV(ADTS2));
 
@@ -42,49 +35,45 @@ void init_temperature_sensor_callback(functiontype call_back){
     TCCR0B &= ~(_BV(CS01) | _BV(CS00));
     // Output compare match
     TCCR0A |= _BV(COM0A0);
-
-
-    // For testing timer.
-    // DDRB |= _BV(DDB7);
-
 }
 
-uint32_t convert_to_voltage(uint16_t sample){
-	// 5V goes from 48-992 (with normal pre-scale 0-1023)
-	// 3.3V goes from 48-768 (with normal pre-scale 0-690)
-	uint32_t milivolts = (uint32_t)sample;
-	milivolts = (milivolts*5000)/1023;
-	return milivolts;
+uint32_t convert_to_voltage(uint16_t value){
+    // 5V goes from 48-992 (with normal pre-scale 0-1023)
+    // 3.3V goes from 48-768 (with normal pre-scale 0-690)
+    uint32_t milivolts = (uint32_t)value;
+    milivolts = (milivolts * 5000) / 1023;
+    return milivolts;
 }
 
 int16_t voltage_to_temperature_TMP36(uint32_t voltage){
-	// 10 mV per degree Celsius
-	// sensor can detect in range of -40 to 125 temperature Celsius
-	int16_t temperature_new = (int16_t)(voltage/10);
-	temperature_new = temperature_new-50;
-	if(temperature_new > 125){
-		temperature_new = 125;
-	}else if ( temperature_new < - 40){
+    // 10 mV per degree Celsius
+    // sensor can detect in range of -40 to 125 temperature Celsius
+    int16_t temperature_new = (int16_t)(voltage / 10);
+    temperature_new = temperature_new - 50;
+    if (temperature_new > 125)
+    {
+        temperature_new = 125;
+    }
+    else if (temperature_new < -40)
+    {
         temperature_new = -40;
     }
-	return temperature_new;
+    return temperature_new;
 }
 
 int16_t sample_to_temperature(uint16_t sample){
     return voltage_to_temperature_TMP36(convert_to_voltage(sample));
 }
 
-// Handle interrupt and call the function passed in init.
 ISR(ADC_vect){
-    if(cb != 0){
-        int16_t temperature = voltage_to_temperature_TMP36(convert_to_voltage(ADC));
-        cb(temperature);
-    }
+    raw_sample = ADC;
+
     // This was put here because the interrupt gets reset everytime it interrupts.
     // This happens when you connect timer to adc.
-    TIFR0 |=  _BV(OCF0A);
-
+    TIFR0 |= _BV(OCF0A);
 }
-// Should read value into private instead.
-// Should be controlled by main.
 
+// Get converted temperature
+int16_t get_temperature(){
+    return voltage_to_temperature_TMP36(convert_to_voltage(raw_sample));
+}

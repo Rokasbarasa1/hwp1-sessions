@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef SEVEN_DIGIT_DISPLAY_H_
-#define SEVEN_DIGIT_DISPLAY_H_
+#pragma once
 
 #ifndef UNIT_TEST
     #include <avr/io.h>
@@ -34,13 +33,17 @@
 #define EIGHT 0b00000001
 #define NINE 0b00001001
 
+/**
+ * Uses ports:
+ * 
+ * PortB 0, 1, 2
+ * PortF 0, 1, 2, 3
+ * 
+ * Timer:
+ * timer 4B
+ */
+
 void init_display(uint8_t use_spi_mode);
 void set_segments(uint8_t numbers_new[4]);
-
-// this is instead of printint_4u(uint16_t value)
-// because this function does not print the number
-// it just stores it for use by the interrupt
 void set_number_4u(uint16_t number);
 void print_segments();
-
-#endif

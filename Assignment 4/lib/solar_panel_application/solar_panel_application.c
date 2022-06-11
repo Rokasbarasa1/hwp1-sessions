@@ -49,7 +49,7 @@ uint16_t previousKey = 0;
 uint16_t sameKeyCount = 0;
 
 void init_solar_panel_application(){
-    init_display();
+    init_display(1);
     init_matrix_keyboard();
     init_temperature_sensor();
     init_leds();

@@ -19,7 +19,7 @@
     #include "../../extras/forced_include.h"
     #include "../../extras/include/avr/io.h"
     #include "../../extras/include/avr/interrupt.h"
-
+    #include "../../extras/include/util/delay.h"
 #endif
 
 #define ZERO 0b00000011
@@ -43,11 +43,7 @@
  * timer 4B
  */
 
-void init_display();
+void init_display(uint8_t use_spi_mode);
 void set_segments(uint8_t numbers_new[4]);
-
-// this is instead of printint_4u(uint16_t value)
-// because this function does not print the number
-// it just stores it for use by the interrupt
 void set_number_4u(uint16_t number);
 void print_segments();

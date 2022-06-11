@@ -23,7 +23,9 @@ uint8_t current_number = 0;
 // Simplify number selection array
 uint8_t numbers_array[] = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE};
 
-void init_display()
+uint8_t use_spi = 0;
+
+void init_display(uint8_t use_spi_mode)
 {
     // RCK = PB0
     // SCK = PB1
@@ -39,11 +41,21 @@ void init_display()
 
     // Setup interrupt to run at 100Hz
     OCR4A = 1249; // 100Hz
-
     TCCR4B |= _BV(WGM42);            // Mode CTC
     TCCR4B |= _BV(CS41) | _BV(CS40); // Prescaler 64
     TCCR4A |= _BV(COM4A0);           // Output compare match
     TIMSK4 |= _BV(OCIE4A);           // Turn on the interrupt
+
+    use_spi = use_spi_mode;
+
+    if(use_spi){
+        SPCR &= ~ (_BV(CPOL) | _BV(CPHA));
+		SPCR |= _BV(DORD);
+		SPCR |= _BV(MSTR);
+		SPCR |= _BV(SPR1) | _BV(SPR0);
+		SPSR &= ~_BV(SPI2X);
+		SPCR |= _BV(SPE);
+    }
 }
 
 // Set segment numbers manually with macros
@@ -56,7 +68,7 @@ void set_segments(uint8_t numbers_new[4])
 }
 
 // Pass number and let it be parsed automaticaly
-void set_number(uint16_t number)
+void set_number_4u(uint16_t number)
 {
     if (number < 9999)
     {
@@ -81,30 +93,36 @@ void print_segments()
     // Lets the number be chosen using index
     const uint8_t digits[] = {digit_one, digit_two, digit_three, digit_four};
 
-    // Loop and upload one bit at a time to shift register
-    for (uint8_t i = 0; i < 8; i++)
-    {
-        // Get the bit in index i
-        uint8_t bitStatus = (digits[current_number] >> (i)) & 1;
-
-        if (bitStatus)
+    if(use_spi){
+        SPDR = digits[current_number];
+        while(!(SPSR & (1<<SPIF)));
+    }else{
+        // Loop and upload one bit at a time to shift register
+        for (uint8_t i = 0; i < 8; i++)
         {
-            PORTB |= _BV(PB2);
-        }
-        else
-        {
-            PORTB &= ~(_BV(PB2));
+            // Get the bit in index i
+            uint8_t bitStatus = (digits[current_number] >> (i)) & 1;
+
+            if (bitStatus)
+            {
+                PORTB |= _BV(PB2);
+            }
+            else
+            {
+                PORTB &= ~(_BV(PB2));
+            }
+
+            // Put the bit in the shift register buffer
+            PORTB |= _BV(PB1);
+            PORTB &= ~(_BV(PB1));
         }
 
-        // Put the bit in the shift register buffer
-        PORTB |= _BV(PB1);
-        PORTB &= ~(_BV(PB1));
+
     }
-
     // Move data from the shift register's buffer to the active register
     PORTB |= _BV(PB0);
     PORTB &= ~(_BV(PB0));
-
+    
     // Turn on the transistor for this segment to show
     PORTF &= ~(_BV(current_number));
 }

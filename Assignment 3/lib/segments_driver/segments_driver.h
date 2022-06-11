@@ -34,7 +34,7 @@
 #define EIGHT 0b00000001
 #define NINE 0b00001001
 
-void init_display();
+void init_display(uint8_t use_spi_mode);
 void set_segments(uint8_t numbers_new[4]);
 
 // this is instead of printint_4u(uint16_t value)

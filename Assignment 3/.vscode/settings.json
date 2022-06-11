@@ -11,5 +11,9 @@
     "7_digit_display.h": "c",
     "segments_driver.h": "c",
     "temperature_driver.h": "c"
-  }
+},
+"editor.tokenColorCustomizations": {
+    "comments": "",
+    "textMateRules": []
+}
 }

@@ -16,17 +16,17 @@ void init_segments()
     // MOSI  = PB2
     // MISO  = PB3
 
-    // // Set MOSI and SCK as high and SS as low
-    // DDRB |= _BV(PB0) | _BV(DDB1) | _BV(DDB2);
-    // PORTB |= _BV(PB0) | _BV(PB1) | _BV(PB2);
-    // PORTB &= ~(_BV(PB0));
+    // Set MOSI and SCK as high and SS as low
+    DDRB |= _BV(PB0) | _BV(DDB1) | _BV(DDB2);
+    PORTB |= _BV(PB0) | _BV(PB1) | _BV(PB2);
+    PORTB &= ~(_BV(PB0));
 
-    // // Set SPI bits
-    // SPCR |= _BV(SPE) | _BV(MSTR) | _BV(SPR0);
+    // Set SPI bits
+    SPCR |= _BV(SPE) | _BV(MSTR) | _BV(SPR0);
 
-    // // Disable all transistors that determine which digit is displayed
-    // DDRF |= _BV(DDF0) | _BV(DDF1) | _BV(DDF2) | _BV(DDF3);
-    // PORTF |= _BV(PF0) | _BV(PF1) | _BV(PF2) | _BV(PF3);
+    // Disable all transistors that determine which digit is displayed
+    DDRF |= _BV(DDF0) | _BV(DDF1) | _BV(DDF2) | _BV(DDF3);
+    PORTF |= _BV(PF0) | _BV(PF1) | _BV(PF2) | _BV(PF3);
 
     DDRB = _BV(DDB0) | (1 << 5) | (1 << 3);
     SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);

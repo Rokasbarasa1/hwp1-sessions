@@ -16,7 +16,7 @@ class KEYDriverTest : public ::testing::Test {
 		}
 };
 
-TEST_F(KEYDriverTest, Init_keys) {
+TEST_F(KEYDriverTest, unit_init_keys) {
     //Set some registers to 1 to make checks easier
     DDRC |= _BV(DDC6) | _BV(DDC7);
     PORTC |= _BV(PORTC6) | _BV(PORTC7);
@@ -27,7 +27,7 @@ TEST_F(KEYDriverTest, Init_keys) {
 	EXPECT_EQ(PORTC, 0b11111111);
 }
 
-TEST_F(KEYDriverTest, get_key_not_pressed) {
+TEST_F(KEYDriverTest, unit_get_key_not_pressed) {
 
     init_keys();
     
@@ -39,7 +39,7 @@ TEST_F(KEYDriverTest, get_key_not_pressed) {
     EXPECT_TRUE(!get_key_status(5));
 }
 
-TEST_F(KEYDriverTest, get_key_pressed) {
+TEST_F(KEYDriverTest, unit_get_key_pressed) {
 
     init_keys();
     //Set all 6 key pins to 1 

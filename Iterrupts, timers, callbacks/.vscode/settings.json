@@ -7,5 +7,9 @@
         "io.h": "c",
         "timer.h": "c",
         "callback.h": "c"
+    },
+    "editor.tokenColorCustomizations": {
+        "comments": "",
+        "textMateRules": []
     }
 }

@@ -9,10 +9,10 @@
 
 
 //INTERRUPT
-// #include "../lib/interrupt_key_driver/interrupt_keys.h"
+#include "../lib/interrupt_key_driver/interrupt_keys.h"
 
 //TIMER
-#include "../lib/timer_driver/timer.h"
+// #include "../lib/timer_driver/timer.h"
 
 //CALLBACK INTERRUPT
 // #include "../lib/callback_driver/callback.h"
@@ -44,11 +44,11 @@ int main(void){
 	// Initialize state
     
     //TIMER
-    init_timer();
+    // init_timer();
 
     // INTERRUPT
-    // init_interrupt_keys();
-	// sei();
+    init_interrupt_keys();
+	sei();
 
     // CALLBACK INTERRUPT
     // init_callback(call_back1, call_back2);

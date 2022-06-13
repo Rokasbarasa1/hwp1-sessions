@@ -5,36 +5,42 @@ uint16_t raw_sample = 0;
 void init_temperature_sensor(){
     // PG0 is to enable the sensor
     PORTG |= _BV(PORTG0);
-
     // PK7 is the output from the sensor
     DDRK &= ~(_BV(DDK7));
 
-    // Set up the ADC to be on ADC 15, MUX 1-2 and 5, REFS0/1 sets external capactor mode
-    ADMUX |= _BV(REFS0) | _BV(MUX0) | _BV(MUX1) | _BV(MUX2);
+
+    // REFS1 and 0 sets the reference voltage mode
+    ADMUX |= _BV(REFS0);
     ADMUX &= ~_BV(REFS1);
 
-    // All MUX combined give 100111 which is PK7
+    // Set up the ADC to be on ADC 15, MUX 1-2 and 5,
+    // Only 4 bits are adjusted others are 0 by default
+    ADMUX |= _BV(MUX0) | _BV(MUX1) | _BV(MUX2);
     ADCSRB |= _BV(MUX5);
+    // All MUX combined give 100111 which is ADC15 on pin PK7 
+    // MUX5 is the leading bit and MUX 
 
-    // Set enable, reoccurring, set use interrupt, 128 prescaler
+
+    //        enable,   reoccurring, use interrupt,   -------- 128 prescaler --------
     ADCSRA |= _BV(ADEN) | _BV(ADATE) | _BV(ADIE) | _BV(ADPS0) | _BV(ADPS1) | _BV(ADPS2);
 
     // Enable adc
     ADCSRA |= _BV(ADSC);
 
-    // Set it to interrupt every 1 seconds. Timer 1B
+    // Set it to interrupt every 1 seconds on Timer 1B
+
+    // Set when the ADC is triggered. It is set to Timer 0 compare match
     ADCSRB |= _BV(ADTS1) | _BV(ADTS0);
     ADCSRB &= ~(_BV(ADTS2));
 
-    // For 1 hz timer this was the calculation result
-    OCR0A = 31249;
-    // Mode CTC
-    TCCR0B |= _BV(WGM02);
+    
+    OCR0A = 31249; // 1 hz compare match 
+    TCCR0B |= _BV(WGM02); // Mode CTC
     // Prescaler 256
     TCCR0B |= _BV(CS02);
     TCCR0B &= ~(_BV(CS01) | _BV(CS00));
-    // Output compare match
-    TCCR0A |= _BV(COM0A0);
+
+    TCCR0A |= _BV(COM0A0); // Output compare match
 }
 
 uint32_t convert_to_voltage(uint16_t value){
@@ -66,14 +72,12 @@ int16_t sample_to_temperature(uint16_t sample){
 }
 
 ISR(ADC_vect){
-    uint16_t lower = ADCL;
-    uint16_t upper = ADCH << 8;
+    // Get the value in two parts. Lower and upper and combine them.
+    uint8_t lower = ADCL;
+    uint8_t upper = ADCH << 8;
     raw_sample = lower | upper;
-    
-    // raw_sample = ADC;
 
-    // This was put here because the interrupt gets reset everytime it interrupts.
-    // This happens when you connect timer to adc.
+    // Enable the interrupt again
     TIFR0 |= _BV(OCF0A);
 }
 

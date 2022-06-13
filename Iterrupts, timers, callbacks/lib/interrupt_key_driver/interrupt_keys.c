@@ -11,10 +11,12 @@ void init_interrupt_keys(){
     DDRA = 0b11111111;
     PORTA = 0b00000000;
 
-    // Initialize the setting of the interrupt. Current 11, rising one 
-    // When you press, only after releasing it triggers
+    // Set the interrupts to happen on the rising edge.
+    // When button is let go
     EICRA |= _BV(ISC21) | _BV(ISC20) | _BV(ISC31) | _BV(ISC30);
 
+    // Set external interrupts on int2 and int3 to be on
+    // PD2 PD3 
     EIMSK |= _BV(INT2) | _BV(INT3);
 }
 
@@ -23,6 +25,7 @@ void update_leds(){
     PORTA &= ~(_BV(counter));
 }
 
+// Handle the interrupt service routines
 ISR(INT2_vect){
     if(counter > 0){
         counter--;

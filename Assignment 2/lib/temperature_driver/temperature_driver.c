@@ -66,7 +66,11 @@ int16_t sample_to_temperature(uint16_t sample){
 }
 
 ISR(ADC_vect){
-    raw_sample = ADC;
+    uint16_t lower = ADCL;
+    uint16_t upper = ADCH << 8;
+    raw_sample = lower | upper;
+    
+    // raw_sample = ADC;
 
     // This was put here because the interrupt gets reset everytime it interrupts.
     // This happens when you connect timer to adc.

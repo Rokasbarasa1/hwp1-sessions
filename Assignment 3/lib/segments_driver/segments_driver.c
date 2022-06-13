@@ -27,13 +27,17 @@ uint8_t use_spi = 0;
 
 void init_display(uint8_t use_spi_mode)
 {
-    // RCK = PB0
-    // SCK = PB1
-    // SI  = PB2
+    // RCK = PB0 - slave select (chip enable)
+    // SCK = PB1 - Clock pin
+    // SI  = PB2 - Master out slave in
 
     // Setup pins that give data to the shift register
     DDRB |= _BV(DDB0) | _BV(DDB1) | _BV(DDB2);
-    PORTB &= ~(_BV(PB0) | _BV(PB1) | _BV(PB2));
+
+    // Disable the slave select to not interfere with other
+    // SPI processes
+    PORTB |= _BV(PB0);
+    PORTB &= ~(_BV(PB1) | _BV(PB2));
 
     // Setup pins that control which segment is currently powered on
     DDRF |= _BV(DDF0) | _BV(DDF1) | _BV(DDF2) | _BV(DDF3);
@@ -41,6 +45,7 @@ void init_display(uint8_t use_spi_mode)
 
     // Setup interrupt to run at 100Hz
     OCR4A = 1249; // 100Hz
+    // NEED THE LOWER BIT WRITE HERE
     TCCR4B |= _BV(WGM42);            // Mode CTC
     TCCR4B |= _BV(CS41) | _BV(CS40); // Prescaler 64
     TCCR4A |= _BV(COM4A0);           // Output compare match
@@ -49,11 +54,27 @@ void init_display(uint8_t use_spi_mode)
     use_spi = use_spi_mode;
 
     if(use_spi){
+        // Set clock polarity and clock phase to: 
+        // base clock value is zero, sample on leading clock
+        // Read on rising edge, change on falling edge
         SPCR &= ~ (_BV(CPOL) | _BV(CPHA));
+
+        // Set from which bit the data is transfered form. 
+        // This is when SPI has the whole byte of data loaded into the register already
+        // set bit means least significant bit.
 		SPCR |= _BV(DORD);
+
+        // Set this device as master
 		SPCR |= _BV(MSTR);
+
+
+        // These bits control the clock of SPI:
+        // This combination leads to a frequency of:
+        // 16Mhz/ 128 - not very fast
 		SPCR |= _BV(SPR1) | _BV(SPR0);
-		SPSR &= ~_BV(SPI2X);
+		SPSR &= ~_BV(SPI2X); // This doubles the SPI speed in master. Set to off
+
+        // Enable the SPI
 		SPCR |= _BV(SPE);
     }
 }
@@ -94,8 +115,14 @@ void print_segments()
     const uint8_t digits[] = {digit_one, digit_two, digit_three, digit_four};
 
     if(use_spi){
+        // Select the salve
+        PORTB &= ~(_BV(PB0));
         SPDR = digits[current_number];
         while(!(SPSR & (1<<SPIF)));
+
+        // Deselct the salve
+        PORTB |= _BV(PB0);
+
     }else{
         // Loop and upload one bit at a time to shift register
         for (uint8_t i = 0; i < 8; i++)
@@ -116,12 +143,12 @@ void print_segments()
             PORTB |= _BV(PB1);
             PORTB &= ~(_BV(PB1));
         }
-
+        PORTB |= _BV(PB0);
+        PORTB &= ~(_BV(PB0));
 
     }
     // Move data from the shift register's buffer to the active register
-    PORTB |= _BV(PB0);
-    PORTB &= ~(_BV(PB0));
+
     
     // Turn on the transistor for this segment to show
     PORTF &= ~(_BV(current_number));
